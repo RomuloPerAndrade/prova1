@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TADS - Prova DSW - Filmes</title>
+    <style>
+        titulo  { color: red; }
+        #titulo { color: green; }
+        .titulo { color: blue; }
+        [titulo]{ color: yellow; }
+
+    </style>
+</head>
+<body>
+    <h1 class="titulo">TADS - Prova DSW - Filmes</h1>
+    <table id="dados" class"dados">
+        <thead>
+            <tr><th>Título</th> <th>Gênero</th> <th>Ano de lançamento</th> </tr>
+        </thead>
+        <tbody> </tbody>
+    </table>
+    <script>
+        async function findAll() {
+            const httpResp = await fetch('http://localhost:8080/filmes'); 
+            if (!httpResp.ok) {
+                alert('Erro ao buscar dados');
+                return;
+            }
+            const dados = await httpResp.json();
+            console.log(JSON.stringify(dados)); 
+            const elDados = document.querySelector('#dados > tbody');
+            eldados.innerHTML = '';
+            dados.forEach(dado => {
+                const item = `<tr>
+                    <td>${dado.titulo}</td> <td>${dado.genero}</td> <td>${dado.anoLancamento}</td>
+                    </tr>`;
+                    elDados.insertAdjacentHTML('beforeend', item);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => { findAll(); });
+    </script>
+</body>
+</html>
